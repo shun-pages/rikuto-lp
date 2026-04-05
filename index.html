@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>前里陸斗 Rikuto | 沖繩旅遊・租車・婚禮支援</title>
+  <meta name="description" content="曾在台灣職業足球聯賽擔任日本人首位隊長的前里陸斗，現在沖繩為台灣旅客提供租車、婚禮及旅遊全方位支援。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #fefefe;
+      --bg-warm: #fffaf5;
+      --bg-peach: #fff3ea;
+      --bg-sky: #edf7ff;
+      --bg-mint: #edfcf6;
+      --bg-lavender: #f3f0ff;
+      --bg-lemon: #fefce8;
+      --bg-pink: #fef1f7;
+
+      --text: #1c1c1e;
+      --text-sub: #555568;
+      --text-muted: #8e8ea0;
+
+      --pop-blue: #3b82f6;
+      --pop-blue-light: #60a5fa;
+      --pop-orange: #f97316;
+      --pop-orange-light: #fb923c;
+      --pop-green: #22c55e;
+      --pop-green-light: #4ade80;
+      --pop-pink: #ec4899;
+      --pop-purple: #8b5cf6;
+      --pop-yellow: #eab308;
+      --pop-teal: #14b8a6;
+
+      --tint-blue: #dbeafe;
+      --tint-orange: #ffedd5;
+      --tint-green: #dcfce7;
+      --tint-pink: #fce7f3;
+      --tint-purple: #ede9fe;
+      --tint-yellow: #fef9c3;
+
+      --white: #ffffff;
+      --font: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --radius-sm: 12px;
+      --radius-md: 20px;
+      --radius-lg: 28px;
+      --radius-xl: 40px;
+      --radius-pill: 980px;
+    }
+
+    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+    body { font-family: var(--font); color: var(--text); background: var(--bg); overflow-x: hidden; line-height: 1.6; }
+    img, video { display: block; max-width: 100%; }
+    a { text-decoration: none; color: inherit; }
+
+    /* ===== ICONS (SVG-based, no emoji) ===== */
+    .icon-circle {
+      width: 48px; height: 48px; border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .icon-circle svg { width: 24px; height: 24px; }
+    .ic-blue { background: var(--tint-blue); color: var(--pop-blue); }
+    .ic-orange { background: var(--tint-orange); color: var(--pop-orange); }
+    .ic-green { background: var(--tint-green); color: var(--pop-green); }
+    .ic-purple { background: var(--tint-purple); color: var(--pop-purple); }
+    .ic-pink { background: var(--tint-pink); color: var(--pop-pink); }
+    .ic-teal { background: rgba(20,184,166,0.1); color: var(--pop-teal); }
+
+    /* ===== NAV ===== */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      padding: 0 32px; height: 64px;
+      display: flex; align-items: center; justify-content: space-between;
+      background: rgba(255,255,255,0.88);
+      backdrop-filter: saturate(180%) blur(20px);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+    }
+    .nav-logo { font-size: 22px; font-weight: 900; letter-spacing: -0.5px; }
+    .nav-logo .r { color: var(--pop-orange); }
+    .nav-logo .dot { color: var(--pop-blue); }
+    .nav-links { display: flex; gap: 24px; list-style: none; align-items: center; }
+    .nav-links a { font-size: 15px; font-weight: 500; color: var(--text-sub); transition: color 0.2s; }
+    .nav-links a:hover { color: var(--text); }
+    .nav-cta {
+      background: var(--pop-orange) !important; color: var(--white) !important;
+      padding: 9px 22px !important; border-radius: var(--radius-pill) !important;
+      font-weight: 700 !important; font-size: 14px !important;
+      transition: all 0.25s !important; box-shadow: 0 4px 14px rgba(249,115,22,0.25);
+    }
+    .nav-cta:hover { background: var(--pop-orange-light) !important; transform: translateY(-2px) scale(1.03); box-shadow: 0 6px 20px rgba(249,115,22,0.35); }
+    .nav-toggle { display: none; background: none; border: none; cursor: pointer; padding: 8px; }
+    .nav-toggle span { display: block; width: 22px; height: 2.5px; background: var(--text); margin: 5px 0; border-radius: 2px; transition: all 0.3s; }
+
+    /* ===== HERO ===== */
+    .hero {
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      padding: 100px 32px 60px;
+      background: linear-gradient(160deg, var(--bg-peach) 0%, var(--bg) 30%, var(--bg-sky) 70%, var(--bg-mint) 100%);
+      position: relative; overflow: hidden;
+    }
+
+    .deco { position: absolute; border-radius: 50%; z-index: 0; }
+    .deco-1 { width: 200px; height: 200px; background: var(--tint-orange); top: 8%; right: 5%; animation: floatA 8s ease-in-out infinite; }
+    .deco-2 { width: 140px; height: 140px; background: var(--tint-blue); bottom: 12%; left: 4%; animation: floatB 7s ease-in-out infinite; }
+    .deco-3 { width: 100px; height: 100px; background: var(--tint-green); top: 50%; left: 12%; animation: floatA 9s ease-in-out infinite 2s; }
+    .deco-4 { width: 80px; height: 80px; background: var(--tint-pink); bottom: 25%; right: 10%; animation: floatB 6s ease-in-out infinite 1s; }
+    .deco-5 { width: 60px; height: 60px; background: var(--tint-yellow); top: 20%; left: 30%; animation: floatA 10s ease-in-out infinite 3s; }
+
+    /* Geometric accent shapes instead of emoji stars */
+    .geo-shape { position: absolute; z-index: 0; opacity: 0.18; }
+    .geo-1 { top: 14%; right: 22%; width: 20px; height: 20px; background: var(--pop-orange); border-radius: 4px; transform: rotate(45deg); animation: floatA 7s ease-in-out infinite 1s; }
+    .geo-2 { bottom: 22%; left: 16%; width: 16px; height: 16px; background: var(--pop-blue); border-radius: 50%; animation: floatB 8s ease-in-out infinite 2s; }
+    .geo-3 { top: 38%; right: 38%; width: 14px; height: 14px; background: var(--pop-green); border-radius: 3px; animation: floatA 9s ease-in-out infinite; }
+    .geo-4 { bottom: 35%; left: 35%; width: 18px; height: 18px; border: 3px solid var(--pop-purple); border-radius: 50%; animation: floatB 10s ease-in-out infinite 3s; }
+
+    .hero-inner {
+      position: relative; z-index: 1;
+      display: flex; align-items: center; gap: 60px;
+      max-width: 1100px; width: 100%;
+    }
+    .hero-text { flex: 1; }
+
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--white); border: 2px solid var(--tint-orange);
+      border-radius: var(--radius-pill); padding: 8px 20px;
+      font-size: 14px; font-weight: 700; color: var(--pop-orange);
+      box-shadow: 0 2px 10px rgba(249,115,22,0.1);
+      animation: fadeInUp 0.5s ease both;
+    }
+    .hero-badge .badge-dot {
+      width: 8px; height: 8px; border-radius: 50%; background: var(--pop-orange);
+      animation: pulse 2s ease infinite;
+    }
+
+    .hero h1 {
+      font-size: clamp(34px, 5vw, 56px); font-weight: 900;
+      line-height: 1.2; letter-spacing: -1px;
+      margin: 20px 0;
+      animation: fadeInUp 0.5s ease 0.1s both;
+    }
+    .hero h1 .blue { color: var(--pop-blue); }
+    .hero h1 .orange { color: var(--pop-orange); }
+
+    .hero-sub {
+      font-size: clamp(15px, 1.8vw, 18px); font-weight: 400;
+      color: var(--text-sub); line-height: 1.8; margin-bottom: 32px;
+      animation: fadeInUp 0.5s ease 0.2s both;
+    }
+
+    .hero-actions {
+      display: flex; gap: 14px; flex-wrap: wrap;
+      animation: fadeInUp 0.5s ease 0.3s both;
+    }
+
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 14px 30px; border-radius: var(--radius-pill);
+      font-size: 16px; font-weight: 700; letter-spacing: -0.2px;
+      transition: all 0.25s; cursor: pointer; border: none;
+      font-family: var(--font);
+    }
+    .btn-orange { background: var(--pop-orange); color: var(--white); box-shadow: 0 4px 16px rgba(249,115,22,0.3); }
+    .btn-orange:hover { background: var(--pop-orange-light); transform: translateY(-3px); box-shadow: 0 8px 28px rgba(249,115,22,0.35); }
+    .btn-blue { background: var(--pop-blue); color: var(--white); box-shadow: 0 4px 16px rgba(59,130,246,0.3); }
+    .btn-blue:hover { background: var(--pop-blue-light); transform: translateY(-3px); box-shadow: 0 8px 28px rgba(59,130,246,0.35); }
+    .btn-white { background: var(--white); color: var(--text); border: 2px solid rgba(0,0,0,0.08); box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+    .btn-white:hover { border-color: var(--pop-blue); color: var(--pop-blue); transform: translateY(-3px); box-shadow: 0 6px 20px rgba(59,130,246,0.12); }
+
+    /* SVG inside buttons */
+    .btn svg { width: 18px; height: 18px; }
+
+    .hero-photo {
+      flex-shrink: 0; position: relative;
+      animation: fadeInUp 0.6s ease 0.15s both;
+    }
+    .hero-photo-frame {
+      width: 340px; height: 420px;
+      border-radius: var(--radius-xl);
+      overflow: hidden; position: relative;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.1), 0 0 0 4px var(--white), 0 0 0 6px var(--tint-orange);
+    }
+    .hero-photo-frame img { width: 100%; height: 100%; object-fit: cover; }
+
+    .sticker {
+      position: absolute; z-index: 2;
+      background: var(--white); border-radius: var(--radius-pill);
+      padding: 8px 16px; font-size: 13px; font-weight: 700;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+      display: flex; align-items: center; gap: 8px;
+    }
+    .sticker .sticker-dot {
+      width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+    }
+    .sticker-1 { top: -10px; right: -20px; color: var(--pop-orange); animation: floatA 5s ease-in-out infinite; }
+    .sticker-1 .sticker-dot { background: var(--pop-orange); }
+    .sticker-2 { bottom: 60px; left: -30px; color: var(--pop-blue); animation: floatB 5s ease-in-out infinite 1.5s; }
+    .sticker-2 .sticker-dot { background: var(--pop-blue); }
+    .sticker-3 { bottom: -10px; right: 20px; color: var(--pop-green); animation: floatA 5s ease-in-out infinite 3s; }
+    .sticker-3 .sticker-dot { background: var(--pop-green); }
+
+    /* ===== SECTION COMMON ===== */
+    .section { padding: 100px 32px; }
+    .container { max-width: 1100px; margin: 0 auto; }
+    .text-center { text-align: center; }
+    .mx-auto { margin-left: auto; margin-right: auto; }
+
+    .section-label {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: 1.2px;
+      padding: 7px 18px; border-radius: var(--radius-pill); margin-bottom: 16px;
+    }
+    .section-label .label-bar {
+      width: 16px; height: 3px; border-radius: 2px;
+    }
+    .label-blue { background: var(--tint-blue); color: var(--pop-blue); }
+    .label-blue .label-bar { background: var(--pop-blue); }
+    .label-orange { background: var(--tint-orange); color: var(--pop-orange); }
+    .label-orange .label-bar { background: var(--pop-orange); }
+    .label-green { background: var(--tint-green); color: var(--pop-green); }
+    .label-green .label-bar { background: var(--pop-green); }
+    .label-purple { background: var(--tint-purple); color: var(--pop-purple); }
+    .label-purple .label-bar { background: var(--pop-purple); }
+    .label-pink { background: var(--tint-pink); color: var(--pop-pink); }
+    .label-pink .label-bar { background: var(--pop-pink); }
+
+    .section-title {
+      font-size: clamp(28px, 4.5vw, 44px); font-weight: 900;
+      line-height: 1.2; letter-spacing: -0.8px; margin-bottom: 14px;
+    }
+    .section-desc {
+      font-size: clamp(15px, 1.8vw, 18px); font-weight: 400;
+      line-height: 1.7; color: var(--text-sub); max-width: 580px;
+    }
+
+    /* ===== STATS ===== */
+    .stats-bar {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+      padding: 0 32px; margin-top: -50px; position: relative; z-index: 2;
+    }
+    .stat-card {
+      background: var(--white); border-radius: var(--radius-lg); padding: 32px 24px;
+      text-align: center; box-shadow: 0 8px 30px rgba(0,0,0,0.06);
+      border: 2px solid transparent; transition: all 0.3s;
+    }
+    .stat-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.1); }
+    .stat-card:nth-child(1):hover { border-color: var(--pop-blue); }
+    .stat-card:nth-child(2):hover { border-color: var(--pop-orange); }
+    .stat-card:nth-child(3):hover { border-color: var(--pop-green); }
+    .stat-icon {
+      width: 48px; height: 48px; border-radius: 50%; margin: 0 auto 12px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .stat-icon svg { width: 22px; height: 22px; }
+    .stat-icon.si-blue { background: var(--tint-blue); color: var(--pop-blue); }
+    .stat-icon.si-orange { background: var(--tint-orange); color: var(--pop-orange); }
+    .stat-icon.si-green { background: var(--tint-green); color: var(--pop-green); }
+    .stat-number { font-size: clamp(32px, 4.5vw, 48px); font-weight: 900; letter-spacing: -2px; line-height: 1; }
+    .stat-number.blue { color: var(--pop-blue); }
+    .stat-number.orange { color: var(--pop-orange); }
+    .stat-number.green { color: var(--pop-green); }
+    .stat-label { font-size: 14px; font-weight: 500; color: var(--text-sub); margin-top: 6px; }
+
+    /* ===== STORY ===== */
+    .story-section { background: var(--bg-warm); }
+    .story-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 56px;
+      align-items: center; margin-top: 48px;
+    }
+    .story-video-wrap {
+      position: relative; border-radius: var(--radius-lg);
+      overflow: hidden; aspect-ratio: 9/16; max-height: 500px;
+      box-shadow: 0 16px 48px rgba(0,0,0,0.1);
+      border: 4px solid var(--white);
+    }
+    .story-video-wrap video { width: 100%; height: 100%; object-fit: cover; }
+    .story-video-tag {
+      position: absolute; bottom: 14px; left: 14px;
+      background: var(--white); color: var(--text); padding: 8px 16px;
+      border-radius: var(--radius-pill); font-size: 13px; font-weight: 700;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      display: flex; align-items: center; gap: 8px;
+    }
+    .story-video-tag .tag-dot {
+      width: 8px; height: 8px; border-radius: 50%; background: var(--pop-orange);
+    }
+
+    .story-text h3 {
+      font-size: clamp(22px, 3vw, 30px); font-weight: 800;
+      line-height: 1.35; letter-spacing: -0.4px; margin-bottom: 20px;
+    }
+    .story-text p {
+      font-size: 16px; font-weight: 400; line-height: 1.85;
+      color: var(--text-sub); margin-bottom: 16px;
+    }
+
+    .timeline { display: flex; flex-direction: column; gap: 16px; margin-top: 28px; }
+    .tl-item { display: flex; gap: 14px; align-items: center; }
+    .tl-icon {
+      flex-shrink: 0; width: 44px; height: 44px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .tl-icon svg { width: 20px; height: 20px; }
+    .tl-icon.tl-blue { background: var(--tint-blue); color: var(--pop-blue); }
+    .tl-icon.tl-orange { background: var(--tint-orange); color: var(--pop-orange); }
+    .tl-icon.tl-green { background: var(--tint-green); color: var(--pop-green); }
+    .tl-content { flex: 1; }
+    .tl-title { font-size: 15px; font-weight: 700; color: var(--text); }
+    .tl-desc { font-size: 14px; font-weight: 400; color: var(--text-muted); }
+
+    /* ===== VIDEO SECTION ===== */
+    .video-section { background: linear-gradient(160deg, var(--bg-sky) 0%, var(--bg-lavender) 100%); }
+    .video-wrapper {
+      margin-top: 40px; border-radius: var(--radius-lg); overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.1); border: 4px solid var(--white);
+      max-width: 900px; margin-left: auto; margin-right: auto;
+      aspect-ratio: 16/9;
+    }
+    .video-wrapper video { width: 100%; height: 100%; object-fit: cover; }
+
+    /* ===== SERVICES ===== */
+    .services-section { background: var(--white); }
+    .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 48px; }
+
+    .svc-card {
+      border-radius: var(--radius-lg); padding: 36px 28px;
+      transition: all 0.3s; border: 2px solid transparent; position: relative;
+    }
+    .svc-card:hover { transform: translateY(-6px); box-shadow: 0 16px 48px rgba(0,0,0,0.08); }
+    .svc-card.svc-blue { background: var(--bg-sky); }
+    .svc-card.svc-blue:hover { border-color: var(--pop-blue); }
+    .svc-card.svc-orange { background: var(--bg-peach); }
+    .svc-card.svc-orange:hover { border-color: var(--pop-orange); }
+    .svc-card.svc-green { background: var(--bg-mint); }
+    .svc-card.svc-green:hover { border-color: var(--pop-green); }
+
+    .svc-icon {
+      width: 56px; height: 56px; border-radius: 16px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 20px;
+    }
+    .svc-icon svg { width: 28px; height: 28px; }
+    .svc-icon.si-blue { background: var(--tint-blue); color: var(--pop-blue); }
+    .svc-icon.si-orange { background: var(--tint-orange); color: var(--pop-orange); }
+    .svc-icon.si-green { background: var(--tint-green); color: var(--pop-green); }
+
+    .svc-card h3 { font-size: 22px; font-weight: 800; letter-spacing: -0.3px; margin-bottom: 10px; }
+    .svc-card p { font-size: 15px; font-weight: 400; line-height: 1.75; color: var(--text-sub); }
+    .svc-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      margin-top: 20px; font-size: 15px; font-weight: 700; transition: gap 0.2s;
+    }
+    .svc-link.link-blue { color: var(--pop-blue); }
+    .svc-link.link-orange { color: var(--pop-orange); }
+    .svc-link.link-green { color: var(--pop-green); }
+    .svc-card:hover .svc-link { gap: 10px; }
+
+    /* ===== WHY ME ===== */
+    .why-section { background: var(--bg); }
+    .why-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-top: 48px; }
+    .why-card {
+      background: var(--white); border-radius: var(--radius-lg); padding: 32px;
+      border: 2px solid rgba(0,0,0,0.04); transition: all 0.3s;
+    }
+    .why-card:hover { transform: translateY(-4px); box-shadow: 0 12px 36px rgba(0,0,0,0.06); }
+    .why-card:nth-child(1):hover { border-color: var(--pop-blue); }
+    .why-card:nth-child(2):hover { border-color: var(--pop-green); }
+    .why-card:nth-child(3):hover { border-color: var(--pop-purple); }
+    .why-card:nth-child(4):hover { border-color: var(--pop-orange); }
+
+    .why-icon {
+      width: 52px; height: 52px; border-radius: 16px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 14px;
+    }
+    .why-icon svg { width: 24px; height: 24px; }
+    .wi-blue { background: var(--tint-blue); color: var(--pop-blue); }
+    .wi-green { background: var(--tint-green); color: var(--pop-green); }
+    .wi-purple { background: var(--tint-purple); color: var(--pop-purple); }
+    .wi-orange { background: var(--tint-orange); color: var(--pop-orange); }
+
+    .why-card h3 { font-size: 19px; font-weight: 800; margin-bottom: 8px; }
+    .why-card p { font-size: 15px; font-weight: 400; line-height: 1.75; color: var(--text-sub); }
+
+    /* ===== INSTAGRAM ===== */
+    .ig-section { background: var(--bg-pink); }
+    .ig-grid { display: flex; gap: 24px; justify-content: center; flex-wrap: wrap; margin-top: 40px; }
+    .ig-card {
+      background: var(--white); border: 2px solid rgba(0,0,0,0.04);
+      border-radius: var(--radius-lg); padding: 36px 32px; width: 300px;
+      text-align: center; transition: all 0.3s;
+    }
+    .ig-card:hover { transform: translateY(-6px); box-shadow: 0 16px 48px rgba(0,0,0,0.08); border-color: var(--pop-pink); }
+
+    .ig-avatar {
+      width: 72px; height: 72px; border-radius: 50%;
+      background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 14px;
+      box-shadow: 0 6px 20px rgba(131,58,180,0.2);
+    }
+    .ig-avatar svg { width: 32px; height: 32px; color: var(--white); }
+    .ig-card h4 { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+    .ig-card .ig-desc { font-size: 13px; color: var(--text-muted); margin-bottom: 16px; }
+    .ig-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 10px 24px; border-radius: var(--radius-pill);
+      background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045);
+      font-size: 14px; font-weight: 700; color: var(--white);
+      transition: all 0.25s; box-shadow: 0 4px 14px rgba(131,58,180,0.2);
+    }
+    .ig-btn:hover { transform: scale(1.05); box-shadow: 0 6px 20px rgba(131,58,180,0.3); }
+
+    /* ===== CTA ===== */
+    .cta-section {
+      text-align: center; padding: 120px 32px; position: relative; overflow: hidden;
+      background: linear-gradient(160deg, var(--bg-peach) 0%, var(--bg-lemon) 30%, var(--bg-sky) 60%, var(--bg-mint) 100%);
+    }
+    .cta-deco {
+      position: absolute; border-radius: 50%; opacity: 0.4;
+    }
+    .cta-d1 { width: 300px; height: 300px; background: var(--tint-orange); top: -80px; right: -80px; }
+    .cta-d2 { width: 200px; height: 200px; background: var(--tint-blue); bottom: -60px; left: -60px; }
+    .cta-section .section-title { max-width: 600px; }
+    .cta-section .section-desc { margin-bottom: 36px; }
+    .cta-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; position: relative; z-index: 1; }
+
+    .btn-ig {
+      background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045);
+      color: var(--white); box-shadow: 0 4px 16px rgba(131,58,180,0.25);
+    }
+    .btn-ig:hover { transform: translateY(-3px); box-shadow: 0 8px 28px rgba(131,58,180,0.35); }
+
+    /* ===== FOOTER ===== */
+    .footer { padding: 48px 32px; background: var(--text); color: var(--white); text-align: center; }
+    .footer-brand { font-size: 22px; font-weight: 900; margin-bottom: 4px; }
+    .footer-brand .r { color: var(--pop-orange); }
+    .footer-brand .dot { color: var(--pop-blue); }
+    .footer-sub { font-size: 14px; color: rgba(255,255,255,0.5); margin-bottom: 24px; }
+    .footer-links { display: flex; gap: 24px; justify-content: center; flex-wrap: wrap; margin-bottom: 24px; }
+    .footer-links a { font-size: 14px; color: rgba(255,255,255,0.6); transition: color 0.2s; }
+    .footer-links a:hover { color: var(--white); }
+    .footer-copy { font-size: 12px; color: rgba(255,255,255,0.3); }
+
+    /* ===== ANIMATIONS ===== */
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes floatA { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-18px); } }
+    @keyframes floatB { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-14px) translateX(8px); } }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .rd1 { transition-delay: 0.1s; } .rd2 { transition-delay: 0.2s; } .rd3 { transition-delay: 0.3s; }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 1024px) {
+      .services-grid { grid-template-columns: repeat(2, 1fr); }
+      .hero-photo-frame { width: 280px; height: 350px; }
+    }
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .nav-links.active {
+        display: flex; flex-direction: column; position: absolute;
+        top: 64px; left: 0; right: 0; background: rgba(255,255,255,0.97);
+        backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+        padding: 20px; gap: 16px; border-bottom: 1px solid rgba(0,0,0,0.06);
+      }
+      .nav-toggle { display: block; }
+      .hero-inner { flex-direction: column-reverse; gap: 32px; text-align: center; }
+      .hero-photo-frame { width: 220px; height: 280px; margin: 0 auto; }
+      .sticker-1 { right: -10px; } .sticker-2 { left: -10px; }
+      .hero-actions { justify-content: center; }
+      .section { padding: 80px 20px; }
+      .story-grid { grid-template-columns: 1fr; gap: 36px; }
+      .story-video-wrap { max-height: 380px; margin: 0 auto; }
+      .stats-bar { grid-template-columns: repeat(3, 1fr); gap: 12px; padding: 0 20px; margin-top: -30px; }
+      .stat-card { padding: 20px 12px; }
+      .services-grid, .why-grid { grid-template-columns: 1fr; }
+      .hero-actions, .cta-actions { flex-direction: column; align-items: center; }
+      .btn { width: 100%; max-width: 320px; justify-content: center; }
+    }
+    @media (max-width: 480px) {
+      .section { padding: 64px 16px; }
+      .stat-number { font-size: 28px; }
+      .hero-photo-frame { width: 200px; height: 260px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <a href="#" class="nav-logo"><span class="r">R</span><span class="dot">.</span>Agent</a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#story">我的故事</a></li>
+      <li><a href="#services">服務項目</a></li>
+      <li><a href="#why">為什麼選我</a></li>
+      <li><a href="#contact">聯繫我</a></li>
+      <li><a href="https://r-agent-okinawa.rensys.jp/cars" target="_blank" class="nav-cta">立即預約租車</a></li>
+    </ul>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="deco deco-1"></div>
+    <div class="deco deco-2"></div>
+    <div class="deco deco-3"></div>
+    <div class="deco deco-4"></div>
+    <div class="deco deco-5"></div>
+    <div class="geo-shape geo-1"></div>
+    <div class="geo-shape geo-2"></div>
+    <div class="geo-shape geo-3"></div>
+    <div class="geo-shape geo-4"></div>
+
+    <div class="hero-inner">
+      <div class="hero-text">
+        <div class="hero-badge">
+          <span class="badge-dot"></span>
+          沖繩在地台灣通
+        </div>
+        <h1>
+          嗨！我是<span class="orange">陸斗</span><br>
+          你的<span class="blue">沖繩</span>好夥伴
+        </h1>
+        <p class="hero-sub">
+          曾在台灣當職業足球員、擔任日本人首位隊長的我，
+          在台灣生活了6年，現在回到故鄉沖繩，
+          用流利中文為你安排租車、婚禮、旅遊——
+          讓你的沖繩之旅像回家一樣輕鬆！
+        </p>
+        <div class="hero-actions">
+          <a href="https://r-agent-okinawa.rensys.jp/cars" target="_blank" class="btn btn-orange">
+            <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/><path d="M5 17H3v-6l2-5h9l4 5h3v6h-2M5 17h10"/><path d="M14 6l-1 5H5"/></svg>
+            租車預約
+          </a>
+          <a href="https://www.instagram.com/rikuto_okinawa_shi_sa_14/" target="_blank" class="btn btn-white">
+            <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+            跟我聊聊
+          </a>
+        </div>
+      </div>
+      <div class="hero-photo">
+        <div class="hero-photo-frame">
+          <img src="Rikuto.jpg" alt="前里陸斗 Rikuto Maesato">
+        </div>
+        <div class="sticker sticker-1"><span class="sticker-dot"></span> 前台灣職足隊長</div>
+        <div class="sticker sticker-2"><span class="sticker-dot"></span> 中文流利</div>
+        <div class="sticker sticker-3"><span class="sticker-dot"></span> 沖繩在地人</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <div class="stats-bar container">
+    <div class="stat-card reveal">
+      <div class="stat-icon si-blue">
+        <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1018 0 9 9 0 00-18 0z"/><path d="M3.6 9h16.8M3.6 15h16.8"/><path d="M12 3a15.3 15.3 0 014 9 15.3 15.3 0 01-4 9 15.3 15.3 0 01-4-9 15.3 15.3 0 014-9z"/></svg>
+      </div>
+      <div class="stat-number blue">6</div>
+      <div class="stat-label">年台灣生活經驗</div>
+    </div>
+    <div class="stat-card reveal rd1">
+      <div class="stat-icon si-orange">
+        <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M6 9H4.5a2.5 2.5 0 010-5C7 4 9 8 12 8s5-4 7.5-4a2.5 2.5 0 010 5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 1012 0V2z"/></svg>
+      </div>
+      <div class="stat-number orange">No.1</div>
+      <div class="stat-label">日本人首位台灣職足隊長</div>
+    </div>
+    <div class="stat-card reveal rd2">
+      <div class="stat-icon si-green">
+        <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+      </div>
+      <div class="stat-number green">100%</div>
+      <div class="stat-label">中文溝通無障礙</div>
+    </div>
+  </div>
+
+  <!-- STORY -->
+  <section class="section story-section" id="story">
+    <div class="container">
+      <div class="reveal text-center">
+        <span class="section-label label-blue"><span class="label-bar"></span> My Story</span>
+        <h2 class="section-title">從足球夢想到<span style="color: var(--pop-orange);">沖繩的橋樑</span></h2>
+        <p class="section-desc mx-auto">
+          一段跨越國界的旅程，讓我成為連接台灣與沖繩的最佳夥伴。
+        </p>
+      </div>
+      <div class="story-grid">
+        <div class="story-video-wrap reveal">
+          <video autoplay muted loop playsinline>
+            <source src="Rikuto.mp4" type="video/mp4">
+          </video>
+          <div class="story-video-tag">
+            <span class="tag-dot"></span>
+            台灣職業足球時期
+          </div>
+        </div>
+        <div class="story-text reveal rd1">
+          <h3>在台灣追逐夢想<br>成為歷史上的<span style="color: var(--pop-orange);">第一人</span></h3>
+          <p>
+            來自沖繩的我，懷抱著足球夢來到台灣留學。
+            憑藉不懈的努力，我成功加入台灣職業足球隊，
+            並被選為隊長——這是台灣職足歷史上首位日本人隊長。
+          </p>
+          <p>
+            在台灣生活了6年，讓我深深愛上了這片土地。
+            如今回到故鄉沖繩，我希望用這份連結，
+            幫助每一位台灣朋友享受最棒的沖繩之旅。
+          </p>
+          <div class="timeline">
+            <div class="tl-item">
+              <div class="tl-icon tl-blue">
+                <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M17.8 19.2L16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></svg>
+              </div>
+              <div class="tl-content">
+                <div class="tl-title">台灣留學</div>
+                <div class="tl-desc">前往台灣開始足球與學業之路</div>
+              </div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-icon tl-orange">
+                <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M6 9H4.5a2.5 2.5 0 010-5C7 4 9 8 12 8s5-4 7.5-4a2.5 2.5 0 010 5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 1012 0V2z"/></svg>
+              </div>
+              <div class="tl-content">
+                <div class="tl-title">職業足球生涯</div>
+                <div class="tl-desc">加入台灣職業足球隊，成為日本人首位隊長</div>
+              </div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-icon tl-green">
+                <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+              </div>
+              <div class="tl-content">
+                <div class="tl-title">回到沖繩・創業</div>
+                <div class="tl-desc">創立 R-Agent Okinawa，為台灣朋友服務</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- OKINAWA VIDEO -->
+  <section class="section video-section">
+    <div class="container">
+      <div class="reveal text-center">
+        <span class="section-label label-purple"><span class="label-bar"></span> Okinawa</span>
+        <h2 class="section-title">這就是<span style="color: var(--pop-blue);">沖繩</span></h2>
+        <p class="section-desc mx-auto">
+          碧藍的海洋、溫暖的陽光、美味的料理——沖繩等你來探索。
+        </p>
+      </div>
+      <div class="video-wrapper reveal rd1">
+        <video autoplay muted loop playsinline>
+          <source src="okinawa.mp4" type="video/mp4">
+        </video>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="section services-section" id="services">
+    <div class="container">
+      <div class="reveal text-center">
+        <span class="section-label label-orange"><span class="label-bar"></span> Services</span>
+        <h2 class="section-title">為你量身打造的<span style="color: var(--pop-orange);">沖繩體驗</span></h2>
+        <p class="section-desc mx-auto">
+          從抵達沖繩的那一刻，到回程的最後一秒，我都幫你搞定。
+        </p>
+      </div>
+      <div class="services-grid">
+        <div class="svc-card svc-blue reveal">
+          <div class="svc-icon si-blue">
+            <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/><path d="M5 17H3v-6l2-5h9l4 5h3v6h-2M5 17h10"/><path d="M14 6l-1 5H5"/></svg>
+          </div>
+          <h3>租車仲介服務</h3>
+          <p>
+            中文對應、價格透明的沖繩租車方案。
+            從小型車到大型休旅車，家庭旅遊、蜜月自駕通通有。
+            全程中文客服，讓你安心上路。
+          </p>
+          <a href="https://r-agent-okinawa.rensys.jp/cars" target="_blank" class="svc-link link-blue">
+            查看車輛・預約 <span>&rarr;</span>
+          </a>
+        </div>
+        <div class="svc-card svc-orange reveal rd1">
+          <div class="svc-icon si-orange">
+            <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+          </div>
+          <h3>沖繩婚禮支援</h3>
+          <p>
+            想在沖繩碧海藍天下說「我願意」嗎？
+            最美教堂、夢幻海灘婚禮，
+            從場地預約到當天流程，全中文協助到底。
+          </p>
+          <a href="https://www.instagram.com/rikuto_okinawa_shi_sa_14/" target="_blank" class="svc-link link-orange">
+            私訊諮詢 <span>&rarr;</span>
+          </a>
+        </div>
+        <div class="svc-card svc-green reveal rd2">
+          <div class="svc-icon si-green">
+            <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <h3>沖繩旅遊支援</h3>
+          <p>
+            在地人才知道的私房景點、巷弄美食。
+            行程規劃、餐廳預約、翻譯溝通，
+            讓你的沖繩旅行零煩惱。
+          </p>
+          <a href="https://www.instagram.com/rikuto_okinawa_shi_sa_14/" target="_blank" class="svc-link link-green">
+            私訊諮詢 <span>&rarr;</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY ME -->
+  <section class="section why-section" id="why">
+    <div class="container">
+      <div class="reveal text-center">
+        <span class="section-label label-purple"><span class="label-bar"></span> Why Me</span>
+        <h2 class="section-title">為什麼大家都<span style="color: var(--pop-purple);">找我</span>？</h2>
+        <p class="section-desc mx-auto">
+          不只是服務提供者，更是你在沖繩的好朋友。
+        </p>
+      </div>
+      <div class="why-grid">
+        <div class="why-card reveal">
+          <div class="why-icon wi-blue">
+            <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+          </div>
+          <h3>中文流利溝通</h3>
+          <p>在台灣生活了6年，溝通完全沒障礙。像跟朋友聊天一樣輕鬆自在。</p>
+        </div>
+        <div class="why-card reveal rd1">
+          <div class="why-icon wi-green">
+            <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <h3>沖繩在地人帶路</h3>
+          <p>身為沖繩本地人，旅遊書上找不到的秘境和美食，我都知道。</p>
+        </div>
+        <div class="why-card reveal rd2">
+          <div class="why-icon wi-purple">
+            <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+          </div>
+          <h3>最懂台灣人的日本人</h3>
+          <p>同時理解台灣和日本文化，站在你的角度思考，給你最貼心的建議。</p>
+        </div>
+        <div class="why-card reveal rd3">
+          <div class="why-icon wi-orange">
+            <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          </div>
+          <h3>一個窗口全搞定</h3>
+          <p>租車、婚禮、旅遊，全部找我就好。省掉分別聯繫的麻煩，輕鬆搞定。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INSTAGRAM -->
+  <section class="section ig-section" id="contact">
+    <div class="container">
+      <div class="reveal text-center">
+        <span class="section-label label-pink"><span class="label-bar"></span> Follow Me</span>
+        <h2 class="section-title">在 Instagram <span style="color: var(--pop-pink);">追蹤我</span></h2>
+        <p class="section-desc mx-auto">
+          分享沖繩日常、旅遊推薦和最新優惠資訊。歡迎私訊問我任何問題！
+        </p>
+      </div>
+      <div class="ig-grid">
+        <a href="https://www.instagram.com/rikuto_okinawa_shi_sa_14/" target="_blank" class="ig-card reveal">
+          <div class="ig-avatar">
+            <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10A15.3 15.3 0 0112 2z"/></svg>
+          </div>
+          <h4>@rikuto_okinawa_shi_sa_14</h4>
+          <p class="ig-desc">個人帳號 / 沖繩生活分享</p>
+          <span class="ig-btn">
+            <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+            追蹤
+          </span>
+        </a>
+        <a href="https://www.instagram.com/okinawa_rentacar_rikuto/" target="_blank" class="ig-card reveal rd1">
+          <div class="ig-avatar">
+            <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/><path d="M5 17H3v-6l2-5h9l4 5h3v6h-2M5 17h10"/><path d="M14 6l-1 5H5"/></svg>
+          </div>
+          <h4>@okinawa_rentacar_rikuto</h4>
+          <p class="ig-desc">租車服務 / 優惠資訊</p>
+          <span class="ig-btn">
+            <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+            追蹤
+          </span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <div class="cta-deco cta-d1"></div>
+    <div class="cta-deco cta-d2"></div>
+    <div class="container" style="position: relative; z-index: 1;">
+      <div class="reveal">
+        <span class="section-label label-green"><span class="label-bar"></span> Let's Go</span>
+        <h2 class="section-title mx-auto">準備好你的<span style="color: var(--pop-orange);">沖繩之旅</span>了嗎？</h2>
+        <p class="section-desc mx-auto">
+          不管是租車自駕、夢幻婚禮，還是深度旅遊，
+          我都能幫你打造最完美的沖繩體驗。
+        </p>
+      </div>
+      <div class="cta-actions reveal rd1">
+        <a href="https://r-agent-okinawa.rensys.jp/cars" target="_blank" class="btn btn-orange">
+          <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/><path d="M5 17H3v-6l2-5h9l4 5h3v6h-2M5 17h10"/><path d="M14 6l-1 5H5"/></svg>
+          租車預約
+        </a>
+        <a href="https://www.instagram.com/rikuto_okinawa_shi_sa_14/" target="_blank" class="btn btn-ig">
+          <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+          Instagram 私訊我
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-brand"><span class="r">R</span><span class="dot">.</span>Agent Okinawa</div>
+    <p class="footer-sub">前里陸斗 | r-agent-okinawa</p>
+    <div class="footer-links">
+      <a href="#story">我的故事</a>
+      <a href="#services">服務項目</a>
+      <a href="https://r-agent-okinawa.rensys.jp/cars" target="_blank">租車預約</a>
+      <a href="https://www.instagram.com/rikuto_okinawa_shi_sa_14/" target="_blank">Instagram</a>
+    </div>
+    <p class="footer-copy">&copy; 2026 R-Agent Okinawa. All rights reserved.</p>
+  </footer>
+
+  <script>
+    const revealEls = document.querySelectorAll('.reveal');
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.12, rootMargin: '0px 0px -30px 0px' });
+    revealEls.forEach(el => obs.observe(el));
+
+    document.getElementById('navToggle').addEventListener('click', () => {
+      document.getElementById('navLinks').classList.toggle('active');
+    });
+    document.querySelectorAll('#navLinks a').forEach(a => {
+      a.addEventListener('click', () => document.getElementById('navLinks').classList.remove('active'));
+    });
+  </script>
+</body>
+</html>
